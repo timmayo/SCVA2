@@ -1,0 +1,5 @@
+# Power Platform ALM artifacts
+out/
+*.zip
+*.txt
+*.ps1

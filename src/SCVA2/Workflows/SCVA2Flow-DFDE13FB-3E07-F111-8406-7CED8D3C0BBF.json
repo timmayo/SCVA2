@@ -1,0 +1,92 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_office365": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "scva_SCVA2Outlookconref"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "84893e5a-f6b9-401a-a043-c40050333895"
+          },
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Sendanemail(V2)_To": {
+                  "type": "string",
+                  "format": "email",
+                  "description": "Specify email addresses separated by semicolons like someone@contoso.com",
+                  "x-ms-powerflows-param-ispartial": false
+                },
+                "Sendanemail(V2)_Subject": {
+                  "type": "string",
+                  "description": "Specify the subject of the mail",
+                  "x-ms-powerflows-param-ispartial": false
+                },
+                "Sendanemail(V2)_Body": {
+                  "type": "string",
+                  "format": "html",
+                  "description": "Specify the body of the mail. This parameter is used as part of \"6E799ECE-EF25-46BA-B1AC-FEFE48E2D67F\"",
+                  "x-ms-powerflows-param-ispartial": true
+                }
+              },
+              "required": [
+                "Sendanemail(V2)_To",
+                "Sendanemail(V2)_Subject",
+                "Sendanemail(V2)_Body"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Send_an_email_(V2)": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "b1a5b211-d882-4943-8627-34244689a73e"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_office365",
+              "operationId": "SendEmailV2",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+            },
+            "parameters": {
+              "emailMessage/To": "@triggerBody()['Sendanemail(V2)_To']",
+              "emailMessage/Subject": "@triggerBody()['Sendanemail(V2)_Subject']",
+              "emailMessage/Body": "<p>@{triggerBody()['Sendanemail(V2)_Body']}</p>"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": "0253862642354d9187425cfc8b3bdda2"
+  },
+  "schemaVersion": "1.0.0.0"
+}

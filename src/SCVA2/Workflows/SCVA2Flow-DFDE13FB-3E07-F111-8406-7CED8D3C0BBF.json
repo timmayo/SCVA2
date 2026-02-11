@@ -49,7 +49,7 @@
                 "Sendanemail(V2)_Body": {
                   "type": "string",
                   "format": "html",
-                  "description": "Specify the body of the mail. This parameter is used as part of \"6E799ECE-EF25-46BA-B1AC-FEFE48E2D67F\"",
+                  "description": "Specify the body of the mail. This parameter is used as part of \"508F930D-67F6-4956-8BFD-9AD79F387D72\"",
                   "x-ms-powerflows-param-ispartial": true
                 }
               },
@@ -78,7 +78,7 @@
             "parameters": {
               "emailMessage/To": "@triggerBody()['Sendanemail(V2)_To']",
               "emailMessage/Subject": "@triggerBody()['Sendanemail(V2)_Subject']",
-              "emailMessage/Body": "<p>@{triggerBody()['Sendanemail(V2)_Body']}</p>"
+              "emailMessage/Body": "<p>@{triggerBody()['Sendanemail(V2)_Body']} This time we are testing rollback versioning</p>"
             },
             "authentication": "@parameters('$authentication')"
           }
